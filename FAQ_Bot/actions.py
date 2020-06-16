@@ -25,3 +25,58 @@
 #         dispatcher.utter_message(text="Hello World!")
 #
 #         return []
+
+from rasa_sdk.forms import FormAction
+
+from rasa_sdk import Action
+from rasa_sdk.events import UserUtteranceReverted
+
+
+class SalesForm(FormAction):
+    """Collects sales information and adds it to the spreadsheet"""
+
+    def name(self):
+        return "sales_form"
+    
+    @staticmethod
+    def required_slots(tracker) :
+        return [
+            "job_function",
+            "use_case",
+            "budget",
+            "person_name",
+            "company",
+            "business_email",
+            ]
+    
+    
+    def submit(
+        self,
+        dispatcher,
+        tracker,
+        domain,
+    ) :
+        dispatcher.utter_message("Thanks for getting in touch, we’ll contact you soon")
+
+        return []
+
+    
+    def slot_mappings(self):
+        return {"use_case": self.from_text(intent="inform")}
+    
+
+    
+
+
+################################################################################
+
+
+class ActionGreetUser(Action):
+    """Revertible mapped action for utter_greet"""
+
+    def name(self):
+        return "action_greet"
+
+    def run(self, dispatcher, tracker, domain):
+        dispatcher.utter_template("utter_greet", tracker)
+        return [UserUtteranceReverted()]

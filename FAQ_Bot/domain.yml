@@ -1,5 +1,22 @@
+forms:
+  - sales_form
+  
+slots:
+  job_function:
+    type: unfeaturized
+  person_name:
+    type: unfeaturized
+  budget:
+    type: unfeaturized
+  business_email:
+    type: unfeaturized
+  use_case:
+    type: unfeaturized
+  company:
+    type: unfeaturized
+
 intents:
-  - greet
+  - greet: {triggers: action_greet}
   - goodbye
   - affirm
   - deny
@@ -8,6 +25,16 @@ intents:
   - bot_challenge
   - thank
   - faq
+  - contact_sales
+  - inform
+ 
+entities:
+  - company
+  - job_function
+  - person_name
+  - budget
+  - business_email
+  - use_case
 
 
 responses:
@@ -33,7 +60,26 @@ responses:
   utter_noworries:
   - text: "No worries!"
   
+  utter_ask_business_email:
+  - text: "What's your business email?"
+  
+  utter_ask_company:
+  - text: "What company do you work for?"
+  
+  utter_ask_budget:
+  - text: "What's your annual budget for conversational AI? 💸"
+  
+  utter_ask_job_function:
+  - text: "What's your job? 🕴"
+  
+  utter_ask_person_name:
+  - text: "What's your name?"
+  
+  utter_ask_use_case:
+  - text: "What's your use case?"
+  
 actions:
+  - action_greet
   - respond_faq
   
 session_config:
